@@ -1,13 +1,16 @@
 {
   "name": "brand-affinity-explorer",
   "private": true,
+  "homepage": "https://mksree-gh.github.io/brand-affinity-explorer",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "lucide-react": "^0.534.0",
