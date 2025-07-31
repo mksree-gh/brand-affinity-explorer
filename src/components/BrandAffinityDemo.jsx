@@ -97,7 +97,7 @@ const BrandAffinityDemo = () => {
     const resetWeights = () => setWeights({ frequency: 30, recency: 10, spend: 15, repeat: 20, advocacy: 10, preference: 15 });
 
     return (
-        <div className="min-h-screen bg-gray-50 text-gray-900">
+        <div className="h-screen flex flex-col overflow-hidden bg-gray-50 text-gray-900">
             <div className="border-b border-gray-200 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -113,8 +113,8 @@ const BrandAffinityDemo = () => {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col lg:flex-row gap-6">
-                <aside className="w-full lg:w-72">
+            <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 flex lg:flex-row gap-6 overflow-hidden">
+                <aside className="w-full lg:w-72 overflow-y-auto h-full">
                     <div className="bg-white rounded-xl border border-gray-200 p-4">
                         <h3 className="font-semibold mb-4">Users</h3>
                         <div className="block lg:hidden mb-4">
@@ -136,7 +136,7 @@ const BrandAffinityDemo = () => {
                     </div>
                 </aside>
 
-                <main className="flex-1 space-y-6">
+                <main className="flex-1 space-y-6 overflow-y-auto h-full pr-1">
                     <div className="bg-white rounded-xl border border-gray-200 p-6">
 
                         <h2 className="text-xl font-semibold text-gray-900">{currentUser?.name}</h2>
@@ -146,7 +146,7 @@ const BrandAffinityDemo = () => {
                         <p className="text-xs text-gray-500">Location: {currentUser?.location}</p>
 
                         <div className="overflow-x-auto">
-                            <svg viewBox="0 0 1000 600" className="w-full h-auto bg-gray-25 rounded-lg transition-all duration-500 ease-out">
+                            <svg viewBox="0 0 1000 600" className="w-full h-[60vh] bg-gray-25 rounded-lg transition-all duration-500 ease-out">
                                 {positionedBubbles.map(bubble => (
                                     <g key={bubble.brand}>
                                         <AnimatedBubble bubble={bubble} />
@@ -170,7 +170,7 @@ const BrandAffinityDemo = () => {
                     </div>
 
                     {showWeights && (
-                        <div className="bg-white rounded-xl border border-gray-200 p-6">
+                        <div className="bg-white rounded-xl border border-gray-200 p-6 max-h-[calc(100vh-160px)] overflow-y-auto">
                             <div className="flex justify-between items-center mb-6">
                                 <h3 className="text-lg font-semibold">Affinity Weights</h3>
                                 <button onClick={() => setShowWeights(false)} className="text-gray-400 hover:text-gray-600">
