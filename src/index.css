@@ -1,0 +1,29 @@
+/* src/index.css */
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  And you can still add your custom slider styles here
+  from the original guide.
+*/
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #111827; /* Tailwind gray-900 */
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #111827; /* Tailwind gray-900 */
+  cursor: pointer;
+  border: none;
+}
