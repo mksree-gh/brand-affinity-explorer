@@ -97,15 +97,15 @@ const BrandAffinityDemo = () => {
     const resetWeights = () => setWeights({ frequency: 30, recency: 10, spend: 15, repeat: 20, advocacy: 10, preference: 15 });
 
     return (
-        <div className="h-screen flex flex-col overflow-hidden bg-gray-50 text-gray-900">
+        <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
             <div className="border-b border-gray-200 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                         <div>
-                            <h1 className="text-2xl font-semibold">Brand Affinity Explorer</h1>
+                            <h1 className="text-xl sm:text-2xl font-semibold">Brand Affinity Explorer</h1>
                             <p className="text-sm text-gray-600">Explore user-brand relationships interactively</p>
                         </div>
-                        <button onClick={() => setShowWeights(!showWeights)} className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800">
+                        <button onClick={() => setShowWeights(!showWeights)} className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 text-sm">
                             <Sliders className="w-4 h-4" />
                             {showWeights ? 'Hide' : 'Edit'} Weights
                         </button>
@@ -113,12 +113,12 @@ const BrandAffinityDemo = () => {
                 </div>
             </div>
 
-            <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-6 flex lg:flex-row gap-6 overflow-hidden">
-                <aside className="w-full lg:w-72 overflow-y-auto h-full">
+            <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex flex-col lg:flex-row gap-4 lg:gap-6">
+                <aside className="w-full lg:w-72 flex-shrink-0">
                     <div className="bg-white rounded-xl border border-gray-200 p-4">
                         <h3 className="font-semibold mb-4">Users</h3>
                         <div className="block lg:hidden mb-4">
-                            <select value={selectedUser} onChange={(e) => setSelectedUser(parseInt(e.target.value))} className="w-full p-2 border border-gray-300 rounded-md">
+                            <select value={selectedUser} onChange={(e) => setSelectedUser(parseInt(e.target.value))} className="w-full p-2 border border-gray-300 rounded-md text-sm">
                                 {users.map(user => (
                                     <option key={user.id} value={user.id}>{user.name}</option>
                                 ))}
@@ -127,7 +127,7 @@ const BrandAffinityDemo = () => {
                         <div className="hidden lg:block space-y-2">
                             {users.map(user => (
                                 <button key={user.id} onClick={() => setSelectedUser(user.id)}
-                                    className={`w-full text-left p-3 rounded-lg ${selectedUser === user.id ? 'bg-gray-900 text-white' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'}`}>
+                                    className={`w-full text-left p-3 rounded-lg transition-colors ${selectedUser === user.id ? 'bg-gray-900 text-white' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'}`}>
                                     <div className="text-sm font-medium">{user.name}</div>
                                     <div className="text-xs opacity-75 mt-1">{user.description}</div>
                                 </button>
@@ -136,17 +136,20 @@ const BrandAffinityDemo = () => {
                     </div>
                 </aside>
 
-                <main className="flex-1 space-y-6 overflow-y-auto h-full pr-1">
-                    <div className="bg-white rounded-xl border border-gray-200 p-6">
+                <main className="flex-1 space-y-4 lg:space-y-6 min-w-0">
+                    <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6">
+                        <div className="mb-4">
+                            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">{currentUser?.name}</h2>
+                            <p className="text-sm text-gray-600 mb-1">{currentUser?.description}</p>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 text-xs text-gray-500">
+                                <p>Last Purchase: {currentUser?.lastPurchaseDate}</p>
+                                <p>Purchase Power (3mo): ${currentUser?.purchasePower3Months?.toLocaleString()}</p>
+                                <p>Location: {currentUser?.location}</p>
+                            </div>
+                        </div>
 
-                        <h2 className="text-xl font-semibold text-gray-900">{currentUser?.name}</h2>
-                        <p className="text-sm text-gray-600 mb-1">{currentUser?.description}</p>
-                        <p className="text-xs text-gray-500">Last Purchase: {currentUser?.lastPurchaseDate}</p>
-                        <p className="text-xs text-gray-500">Purchase Power (3mo): ${currentUser?.purchasePower3Months?.toLocaleString()}</p>
-                        <p className="text-xs text-gray-500">Location: {currentUser?.location}</p>
-
-                        <div className="overflow-x-auto">
-                            <svg viewBox="0 0 1000 600" className="w-full h-[60vh] bg-gray-25 rounded-lg transition-all duration-500 ease-out">
+                        <div className="overflow-hidden rounded-lg">
+                            <svg viewBox="0 0 1000 600" className="w-full h-[40vh] sm:h-[50vh] lg:h-[60vh] bg-gray-25 transition-all duration-500 ease-out">
                                 {positionedBubbles.map(bubble => (
                                     <g key={bubble.brand}>
                                         <AnimatedBubble bubble={bubble} />
@@ -154,7 +157,8 @@ const BrandAffinityDemo = () => {
                                 ))}
                             </svg>
                         </div>
-                        <div className="mt-4 flex flex-wrap gap-4">
+                        
+                        <div className="mt-4 flex flex-wrap gap-3">
                             {Object.entries(
                                 affinityData.reduce((acc, curr) => {
                                     if (!acc[curr.category]) acc[curr.category] = curr.color;
@@ -162,25 +166,25 @@ const BrandAffinityDemo = () => {
                                 }, {})
                             ).map(([category, color]) => (
                                 <div key={category} className="flex items-center gap-2">
-                                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                                    <span className="text-xs text-gray-600">{category}</span>
+                                    <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
+                                    <span className="text-xs text-gray-600 whitespace-nowrap">{category}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
 
                     {showWeights && (
-                        <div className="bg-white rounded-xl border border-gray-200 p-6 max-h-[calc(100vh-160px)] overflow-y-auto">
+                        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6">
                             <div className="flex justify-between items-center mb-6">
                                 <h3 className="text-lg font-semibold">Affinity Weights</h3>
-                                <button onClick={() => setShowWeights(false)} className="text-gray-400 hover:text-gray-600">
+                                <button onClick={() => setShowWeights(false)} className="text-gray-400 hover:text-gray-600 p-1">
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>
 
-                            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
                                 {Object.entries(weights).map(([factor, value]) => (
-                                    <div key={factor} className="flex flex-col space-y-1">
+                                    <div key={factor} className="flex flex-col space-y-2">
                                         <label htmlFor={factor} className="text-sm font-medium text-gray-700 capitalize">{factor}</label>
                                         <input
                                             id={factor}
@@ -192,16 +196,16 @@ const BrandAffinityDemo = () => {
                                             onChange={(e) => handleWeightChange(factor, e.target.value)}
                                             className="w-full h-2 rounded-full appearance-none bg-gray-200 accent-gray-800 focus:outline-none"
                                         />
-                                        <div className="text-xs text-gray-500">{value}%</div>
+                                        <div className="text-xs text-gray-500 text-center">{value}%</div>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="flex justify-between items-center mt-6 pt-4 border-t">
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mt-6 pt-4 border-t">
                                 <div className="text-sm text-gray-600">
                                     Total: <span className="font-semibold text-gray-900">{Object.values(weights).reduce((a, b) => a + b, 0)}%</span>
                                 </div>
-                                <button onClick={resetWeights} className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
+                                <button onClick={resetWeights} className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 whitespace-nowrap">
                                     Reset to Defaults
                                 </button>
                             </div>
