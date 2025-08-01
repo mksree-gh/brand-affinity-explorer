@@ -6,6 +6,6 @@ export default defineConfig({
   base: "/brand-affinity-explorer/",
   plugins: [
     react(),
-    tailwindcss(),
-  ],
+    tailwindcss()],
 })
+

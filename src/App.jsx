@@ -1,3 +1,7 @@
+// src/App.jsx
+
+// Forcing a cache bust!
+
 import { useState } from 'react'
 import BrandAffinityDemo from './components/BrandAffinityDemo';
 
